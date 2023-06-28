@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider,styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -71,6 +71,35 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+const theme = createTheme({
+  components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundImage: "url(" + `/images/background_menu.jpg` + ")",
+          width: drawerWidth,
+        },
+      },
+    },
+  },
+  typography: {
+    fontFamily: "Prompt",
+    fontWeightLight: 400,
+    fontWeightRegular: 500,
+    fontWeightMedium: 600,
+    fontWeightBold: 700,
+  },
+  spacing: 8,
+  palette: {
+   primary:{main: "#5D8D73"},
+    // primary: process.env.REACT_APP_IS_PRODUCTION == "0" ? blue : blueGrey,
+    background: {
+      default: "#CFD2D6",
+    },
+  },
+});
+
+
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -81,7 +110,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function App() {
-  const theme = useTheme();
+  
   const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
@@ -93,29 +122,31 @@ export default function App() {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <Header open = {open} onDrawerOpen={handleDrawerOpen}/>
-      <Menu open = {open} onDrawerClose={handleDrawerClose}/>
+      <Header open={open} onDrawerOpen={handleDrawerOpen} />
+      <Menu open={open} onDrawerClose={handleDrawerClose} />
 
       <Main open={open}>
         <DrawerHeader />
         <Routes>
-          <Route path='/login' element={<LoginPage/>}/>
-          <Route path='/register' element={ <RegisterPage />}/>
-          <Route path='/stock' element={ <StockPage />}/>
-          <Route path='/stock/create' element={ <StockCreatePage />}/>
-          <Route path='/stock/edit/:id' element={ <StockEditPage />}/>
-          <Route path='/report' element={ <ReportPage />}/>
-          <Route path='/about' element={ <AboutUs />}/>
-          <Route path='/' element={ <Navigate to ='/login' />}/>
-          <Route path='*' element={ <NotFound />}/>
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/stock' element={<StockPage />} />
+          <Route path='/stock/create' element={<StockCreatePage />} />
+          <Route path='/stock/edit/:id' element={<StockEditPage />} />
+          <Route path='/report' element={<ReportPage />} />
+          <Route path='/about' element={<AboutUs />} />
+          <Route path='/' element={<Navigate to='/login' />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </Main>
     </Box>
+    </ThemeProvider>
   );
 }
-const NotFound = ()=>(
+const NotFound = () => (
   <div>
     <h1>404 - Not Found!</h1>
     <Link to="/">Go Home</Link>

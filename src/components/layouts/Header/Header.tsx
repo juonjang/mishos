@@ -1,23 +1,29 @@
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import * as React from "react";
+import { styled, useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import { Badge } from "@mui/material";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import { useNavigate } from "react-router-dom";
+// import * as loginActions from "../../../actions/login.action";
+import { useDispatch } from "react-redux";
+// import { useAppDispatch } from "../../..";
 
 const drawerWidth = 240;
 
@@ -78,6 +84,7 @@ type HeaderProp = {
 
 export default function Header({open,onDrawerOpen}: HeaderProp) {
   const theme = useTheme();
+  const navigate = useNavigate();
  
 
   const handleDrawerOpen = () => {
@@ -99,9 +106,43 @@ export default function Header({open,onDrawerOpen}: HeaderProp) {
       >
         <MenuIcon />
       </IconButton>
-      <Typography variant="h6" noWrap component="div">
-        Persistent drawer
-      </Typography>
+        <Typography variant="h6" noWrap component="div">
+          {/* CMStock Workshop with ReactJS - Typescript (TS) V.{process.env.REACT_APP_VERSION} */}
+          MIS NONGBUALAMPHU HOSPITAL
+        </Typography>
+
+        <Box sx={{ flexGrow: 1 }} />
+
+        <Typography variant="h6" noWrap component="div" fontWeight="300">
+          Updated 2023
+        </Typography>
+
+        <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+            <Badge badgeContent={4} color="error">
+              <MailIcon />
+            </Badge>
+          </IconButton>
+          <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
+            <Badge badgeContent={17} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <IconButton
+            size="large"
+            edge="end"
+            aria-label="account of current user"
+            aria-haspopup="true"
+            onClick={() => {
+              alert('logOut')
+              navigate('/login')
+              // dispatch(loginActions.logout(navigate)); 
+            }}
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+        </Box>
     </Toolbar>
   </AppBar>
   );
